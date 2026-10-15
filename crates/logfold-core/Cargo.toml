@@ -1,7 +1,10 @@
 [package]
 name = "logfold-core"
-version = "0.1.0"
-edition = "2024"
+version.workspace = true
+edition.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "Normalize log lines and fold matching patterns into frequency counts"
 
 [dependencies]
-regex = "1.13.1"
+regex.workspace = true
