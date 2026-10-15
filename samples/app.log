@@ -1,0 +1,6 @@
+user 123 logged in from 10.0.0.5
+user 456 logged in from 10.0.0.9
+user 789 logged in from 192.168.1.20
+timeout after 30s on db-1
+timeout after 45s on db-2
+request 123e4567-e89b-12d3-a456-426614174000 finished in 120ms

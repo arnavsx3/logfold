@@ -3,5 +3,11 @@ name = "logfold-cli"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "logfold"
+path = "src/main.rs"
+
 [dependencies]
 logfold-core = { path = "../logfold-core" }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"

@@ -3,14 +3,11 @@ use std::sync::LazyLock;
 use regex::Regex;
 
 static UUID_RE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(
-        r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b",
-    )
-    .unwrap()
+    Regex::new(r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b")
+        .unwrap()
 });
 
-static IP_RE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"\b\d{1,3}(\.\d{1,3}){3}\b").unwrap());
+static IP_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\b\d{1,3}(\.\d{1,3}){3}\b").unwrap());
 
 static NUM_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\d+").unwrap());
 
