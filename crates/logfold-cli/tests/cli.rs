@@ -65,6 +65,17 @@ fn skips_blank_lines_and_folds_decimal_durations() {
 }
 
 #[test]
+fn folds_leading_dot_and_zero_prefixed_decimals_together() {
+    let output = run(
+        &[],
+        b"latency .5ms\nlatency 0.5ms\nlatency -.25ms\nlatency +.5e2ms\n",
+    );
+    assert!(output.status.success());
+    assert_eq!(output.stdout, b"     4x  latency <NUM>ms\n");
+    assert!(output.stderr.is_empty());
+}
+
+#[test]
 fn reports_missing_files() {
     let output = run(&["/logfold-nonexistent-directory/missing.log"], b"");
     assert!(!output.status.success());

@@ -21,7 +21,7 @@ static HEX_RE: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"\b0[xX][0-9a-fA-F]+\b").expect("valid hex regex"));
 
 static NUM_RE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?P<prefix>^|[^\w])[-+]?[0-9]+(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?")
+    Regex::new(r"(?P<prefix>^|[^\w])[-+]?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)(?:[eE][-+]?[0-9]+)?")
         .expect("valid number regex")
 });
 
@@ -122,6 +122,18 @@ mod tests {
     }
 
     #[test]
+    fn masks_leading_dot_decimals() {
+        for value in [".5", "-.5", "+.5", ".5e-3", "-.5E+2"] {
+            assert_eq!(mask_line(value), "<NUM>");
+            assert_eq!(mask_line(&format!("latency={value}ms")), "latency=<NUM>ms");
+            assert_eq!(
+                mask_line(&format!("latency ({value}ms), ready")),
+                "latency (<NUM>ms), ready"
+            );
+        }
+    }
+
+    #[test]
     fn preserves_digits_inside_words() {
         assert_eq!(
             mask_line("worker2 api-v1 node-42 café3"),
@@ -145,7 +157,7 @@ mod tests {
 
     #[test]
     fn masking_is_idempotent() {
-        let line = "2026-10-15T12:30:01Z user 42 from 10.0.0.1 latency=1.2ms ptr=0xABCD";
+        let line = "2026-10-15T12:30:01Z user 42 from 10.0.0.1 latency=1.2ms delta=-.5 rate=.5e-3 ptr=0xABCD";
         let masked = mask_line(line);
         assert_eq!(mask_line(&masked), masked);
     }
