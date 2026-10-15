@@ -58,6 +58,13 @@ fn empty_input_produces_no_output() {
 }
 
 #[test]
+fn skips_blank_lines_and_folds_decimal_durations() {
+    let output = run(&[], b"\n \t\n  latency 12ms\r\nlatency\t1.5ms\n");
+    assert!(output.status.success());
+    assert_eq!(output.stdout, b"     2x  latency <NUM>ms\n");
+}
+
+#[test]
 fn reports_missing_files() {
     let output = run(&["/logfold-nonexistent-directory/missing.log"], b"");
     assert!(!output.status.success());
