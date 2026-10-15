@@ -53,7 +53,7 @@ fn run(args: Args) -> Result<()> {
         if bytes == 0 {
             break;
         }
-        folder.add(line.trim_end_matches(['\r', '\n']));
+        folder.add(&line);
         line_number += 1;
     }
 

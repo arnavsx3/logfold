@@ -42,13 +42,3 @@ impl Folder {
         patterns
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn empty_folder_gives_no_patterns() {
-        assert!(Folder::new().finish().is_empty());
-    }
-}

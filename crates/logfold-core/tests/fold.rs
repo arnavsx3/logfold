@@ -1,6 +1,11 @@
 use logfold_core::Folder;
 
 #[test]
+fn empty_folder_gives_no_patterns() {
+    assert!(Folder::new().finish().is_empty());
+}
+
+#[test]
 fn folds_and_sorts_by_count() {
     let mut folder = Folder::new();
 
