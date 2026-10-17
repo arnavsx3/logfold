@@ -51,6 +51,10 @@ optional `Z`, `+05:30`, or `+0530` offsets. Addresses are checked for valid IPv4
 octets. Digits inside words stay intact (`api-v1` and `api-v2` remain separate);
 numeric suffixes after punctuation are masked (`db-1` becomes `db-<NUM>`).
 
+Decimals without a leading zero are supported, including signed values and
+exponents. For example, `latency=.5ms`, `latency=-.5ms`, and `latency=.5e-3ms`
+all fold into `latency=<NUM>ms`.
+
 Whitespace is trimmed and collapsed to single spaces. Blank lines are skipped.
 Patterns are sorted by descending count, then by text to make ties repeatable.
 
